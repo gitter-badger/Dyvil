@@ -6,6 +6,7 @@ import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
+import dyvil.lang.Array;
 import dyvil.lang.Boolean;
 
 import dyvil.annotation.Intrinsic;
@@ -14,7 +15,7 @@ import dyvil.annotation.inline;
 
 import static dyvil.reflect.Opcodes.*;
 
-public interface BooleanArray
+public interface BooleanArray extends Array
 {
 	public static final boolean[]	EMPTY	= new boolean[0];
 	
@@ -47,6 +48,30 @@ public interface BooleanArray
 		}
 		return array;
 	}
+	
+	// Wrapper Methods
+	
+	@Override
+	public int length();
+	
+	public default boolean isEmpty() {
+		return this.length() <= 0;
+	}
+	
+	public boolean subscript(int index);
+	
+	public void subscript_$eq(int index, boolean value);
+	
+	public boolean[] toArray();
+	
+	@Override
+	public String toString();
+	
+	@Override
+	public boolean equals(Object obj);
+	
+	@Override
+	public int hashCode();
 	
 	// Basic Array Operations
 	
@@ -316,6 +341,24 @@ public interface BooleanArray
 	}
 	
 	// equals, hashCode and toString
+	
+	public static @infix @inline boolean equals(BooleanArray array1, BooleanArray array2)
+	{
+		int len1 = array1.length();
+		if (len1 != array2.length())
+		{
+			return false;
+		}
+		
+		for (int i = 0; i < len1; i++)
+		{
+			if (array1.subscript(i) != array2.subscript(i))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 	
 	public static @infix @inline boolean equals(boolean[] array1, boolean[] array2)
 	{
