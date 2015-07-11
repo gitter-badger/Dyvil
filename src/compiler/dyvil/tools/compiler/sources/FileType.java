@@ -23,6 +23,7 @@ public class FileType implements IFileType
 	public static final Map<String, IFileType>	fileTypes		= new HashMap();
 	
 	public static final IFileType				DYVIL_UNIT		= new FileType("dyv", DyvilUnit::new);
+	public static final IFileType				JAVA_UNIT		= new FileType("java", JavaUnit::new);
 	public static final IFileType				DYVIL_HEADER	= new FileType("dyh", DyvilHeader::new);
 	
 	static
@@ -31,6 +32,9 @@ public class FileType implements IFileType
 		fileTypes.put("dyvil", DYVIL_UNIT);
 		fileTypes.put("dyh", DYVIL_HEADER);
 		fileTypes.put("dyvilh", DYVIL_HEADER);
+		
+		// Java units use the same AST classes, only the parser is different
+		fileTypes.put("java", JAVA_UNIT);
 	}
 	
 	protected String							extension;
